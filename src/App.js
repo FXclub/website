@@ -1,32 +1,43 @@
 import './App.css';
 
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom';
 
-import Papa from 'papaparse';
-import logo from './logo.svg';
+import RatePage from './pages/Rate';
+import AboutPage from './pages/About';
+import HomePage from './pages/Home';
+import NoMatchPage from './pages/NoMatch';
 
-const URL = 'https://raw.githubusercontent.com/mincongzhang/HistoricalForexAnalysis/master/TODO/EURUSD_20160101.csv';
 
-fetch(URL).then(res => {
-  res.text().then(text => {
-    console.log('text', text);
-    const csv = Papa.parse(text);
-    console.log('csv:', csv);
-  })
-})
+const BasicRouter = () => (
+  <Router>
+    <div style={{height: '100%'}}>
+      <ul style={{display: 'none'}}>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/rate/GBPUSD/20170217">Rate</Link></li>
+        <li><Link to="/about">About</Link></li>
+      </ul>
+     
+
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/rate/:currency?/:date?" component={RatePage} />
+        <Route path="/about" component={AboutPage} />
+        <Route component={NoMatchPage} />
+      </Switch>
+    </div>
+  </Router>
+);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React!</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <BasicRouter />
     );
   }
 }

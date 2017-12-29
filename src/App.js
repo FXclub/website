@@ -25,8 +25,8 @@ const BasicRouter = () => (
      
 
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/rate/:currency?/:date?" component={RatePage} />
+        <Route exact path="/website/" component={HomePage} />
+        <Route path="/website/rate/:currency?/:date?" component={RatePage} />
         <Route path="/about" component={AboutPage} />
         <Route component={NoMatchPage} />
       </Switch>
